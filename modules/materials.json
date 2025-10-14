@@ -1,0 +1,48 @@
+[
+    {
+        "name": "polyester", 
+        "description": "It is a petroleum-based, non-biodegradable plastic that generates significant greenhouse gas emissions during production and sheds microplastics when washed. However, its sustainability improves significantly when it is recycled into new fibers, as this reduces energy use and the need for virgin fossil fuels. ",
+        "score": 2
+    },
+    {
+        "name": "cotton", 
+        "description": "Conventional cotton is generally not sustainable due to high water use, extensive pesticide and fertilizer application, and soil degradation. However, organic cotton is a much more sustainable alternative because it uses fewer pesticides, less water, and can improve soil health. In general, cotton is also biodegradable, and both organic and conventional cotton products can be made more sustainable through practices like buying pre-loved or recycled items. ",
+        "score": 2
+    },
+    {
+        "name": "wool", 
+        "description": "Wool is a highly sustainable fiber due to its natural, renewable, and biodegradable properties, which mean it doesn't contribute to microplastic pollution and can be composted at the end of its life. However, conventional wool production has environmental drawbacks, including significant methane emissions from sheep and land-use issues like overgrazing, soil erosion, and habitat loss. The processing of wool also presents challenges, as it often involves chemically polluting treatments. Therefore, the overall sustainability of wool depends on how it's produced and processed, with factors like animal welfare, land management, and eco-friendly processing methods being crucial to consider. ",
+        "score": 4
+    },
+    {
+        "name": "silk", 
+        "description": "Silk has mixed sustainability, with some positive aspects like being a renewable, biodegradable, natural fiber, but it also presents significant challenges. Conventional production kills silkworms, involves high water and energy use, and can use harmful chemicals, while more ethical alternatives like 'peace silk' are less common and can involve other issues. The overall sustainability depends heavily on the specific production methods used. ",
+        "score": 3
+    },
+    {
+        "name": "linen", 
+        "description": "Linen is a highly sustainable fabric due to the low environmental impact of the flax plant, which requires less water, pesticides, and fertilizers than cotton. Additionally, the production process is more eco-friendly, and linen products are durable, biodegradable, and don't shed microplastics when washed. Concerns include the potential use of chemicals during processing and dyeing, particularly for non-organic linen, so choosing certified organic or natural-colored linen can further enhance its sustainability. ",
+        "score": 4
+    },
+    {
+        "name": "nylon", 
+        "description": "Nylon is not very sustainable due to its reliance on non-renewable petroleum, energy-intensive production, and release of potent greenhouse gases like nitrous oxide during manufacturing. Additionally, it is non-biodegradable, breaks down into microplastics, and contributes to long-term pollution. While traditional nylon is unsustainable, recycled and bio-based versions offer more sustainable alternatives. ",
+        "score": 2
+    },
+    {
+        "name": "spandex", 
+        "description": "Traditional spandex is not sustainable because it's a petroleum-based, non-biodegradable plastic that contributes to greenhouse gas emissions and hinders textile recycling. However, the industry is developing more sustainable alternatives, such as bio-derived spandex made from renewable materials and improved chemical recycling processes, to mitigate these negative impacts.",
+        "Score": 2
+
+    },
+    {
+        "name": "rayon", 
+        "description": "The sustainability of rayon varies significantly depending on the production method, with some processes being sustainable and others harmful. Sustainable aspects include using renewable resources like wood pulp and bamboo, its biodegradability, and the potential for closed-loop systems (like in Lyocell) that recycle chemicals and water, notes Friendtex. However, less sustainable practices involve the use of toxic chemicals like carbon disulfide, high water and energy usage, deforestation concerns, and pollution from untreated wastewater, according to Project Cece and The Guardian. To ensure sustainability, look for certifications like FSC and ensure the product is made from a closed-loop process, say Friendtex and Square Corporation. ",
+        "score": 3
+    },
+    {
+        "name": "acrylic", 
+        "description": "Acrylic is not a sustainable material because it is derived from petroleum, its production is energy-intensive and can release toxic chemicals, and it is non-biodegradable. It also contributes to microplastic pollution when it sheds fibers during use and washing. However, there are emerging efforts to improve its sustainability through chemical and mechanical recycling, creating bio-based alternatives, and using recycled content in new products. ",
+        "score": 1
+    }
+]
