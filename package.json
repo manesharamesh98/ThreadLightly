@@ -1,0 +1,24 @@
+{
+  "name": "threadlightly",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/manesharamesh98/ThreadLightly#readme",
+  "bugs": {
+    "url": "https://github.com/manesharamesh98/ThreadLightly/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manesharamesh98/ThreadLightly.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "validator": "^13.15.15"
+  }
+}
