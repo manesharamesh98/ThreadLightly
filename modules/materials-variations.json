@@ -1,0 +1,9 @@
+{
+  "polyester": ["polyester", "polieser", "poliestrer", "poliestr", "polieester", "polieszter", "polies"],
+  "cotton": ["cotton", "coton", "algodon", "baumwolle", "katoen", "cotone"],
+  "wool": ["wool", "laine", "lana", "wolle"],
+  "elastane": ["elastane", "elastan", "elasztan", "elastahnne", "elasta", "spandex"],
+  "viscose": ["viscose", "rayon", "viskose", "viskoza"],
+  "nylon": ["nylon", "polyamide", "polyamid", "poliamida"],
+  "linen": ["linen", "lin", "lino", "len"]
+}
