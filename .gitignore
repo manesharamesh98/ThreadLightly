@@ -1,1 +1,2 @@
-/node_moduleseasyocr-venv/
+node_modules/
+easyocr-venv/
