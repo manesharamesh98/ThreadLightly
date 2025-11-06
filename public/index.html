@@ -7,16 +7,138 @@
 
   <!-- Manifest -->
   <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/styles.css">
 
   <!-- App icon -->
-  <link rel="icon" href="/icon-192.png" />
+  <link rel="icon" href="/nostalgia-192x192.png" />
 
   <!-- Theme -->
   <meta name="theme-color" content="#317EFB" />
 </head>
 <body>
-  <h1>ThreadLightly OCR Service</h1>
-  <p>Your PWA is running!</p>
+
+  <div class="mobile-container">
+  <h2>Upload or Take a Picture</h2>
+  <input type="file" id="imageUpload" accept="image/*" />
+  <button id="takePictureBtn" type="button">Take a Picture</button>
+  <button id="analyzeBtn" type="button" disabled>Get Materials Analysis</button>
+  <br><br>
+  <video id="cameraStream" autoplay playsinline style="display:none; max-width:100%; border-radius:8px;"></video>
+  <canvas id="captureCanvas" style="display:none;"></canvas>
+  <img id="imagePreview" src="" alt="Image Preview" style="display: none;" />
+  <div id="analysisResult" style="margin-top:16px;"></div>
+  </div>
+
+  <script>
+    const imageUpload = document.getElementById('imageUpload');
+    const imagePreview = document.getElementById('imagePreview');
+    const takePictureBtn = document.getElementById('takePictureBtn');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const cameraStream = document.getElementById('cameraStream');
+    const captureCanvas = document.getElementById('captureCanvas');
+    const analysisResult = document.getElementById('analysisResult');
+
+    let lastImageFile = null;
+    let lastImageBlob = null;
+
+    function enableAnalyzeButton() {
+      analyzeBtn.disabled = false;
+    }
+
+    imageUpload.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        lastImageFile = file;
+        lastImageBlob = null;
+        enableAnalyzeButton();
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = 'block';
+          cameraStream.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.src = '';
+        imagePreview.style.display = 'none';
+        analyzeBtn.disabled = true;
+        lastImageFile = null;
+        lastImageBlob = null;
+      }
+    });
+
+    let stream = null;
+    takePictureBtn.addEventListener('click', async function() {
+      if (!stream) {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          cameraStream.srcObject = stream;
+          cameraStream.style.display = 'block';
+          imagePreview.style.display = 'none';
+          takePictureBtn.textContent = 'Capture Photo';
+        } catch (err) {
+          alert('Could not access the camera.');
+        }
+      } else {
+        // Capture the current frame
+        captureCanvas.width = cameraStream.videoWidth;
+        captureCanvas.height = cameraStream.videoHeight;
+        captureCanvas.getContext('2d').drawImage(cameraStream, 0, 0);
+        const dataUrl = captureCanvas.toDataURL('image/png');
+        imagePreview.src = dataUrl;
+        imagePreview.style.display = 'block';
+        cameraStream.style.display = 'none';
+        takePictureBtn.textContent = 'Take a Picture';
+        // Convert dataURL to Blob for upload
+        fetch(dataUrl)
+          .then(res => res.blob())
+          .then(blob => {
+            lastImageBlob = blob;
+            lastImageFile = null;
+            enableAnalyzeButton();
+          });
+        // Stop the camera
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+    });
+
+    analyzeBtn.addEventListener('click', function() {
+      if (!lastImageFile && !lastImageBlob) return;
+      analyzeBtn.disabled = true;
+      analysisResult.textContent = 'Analyzing...';
+      const formData = new FormData();
+      if (lastImageFile) {
+        formData.append('image', lastImageFile);
+      } else if (lastImageBlob) {
+        formData.append('image', lastImageBlob, 'captured.png');
+      }
+      fetch('/process-image', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          if (data.materials && data.materials.length > 0) {
+            analysisResult.innerHTML = '<b>Materials Analysis:</b><br>' + data.materials.map(mat =>
+              `<div><b>Name:</b> ${mat.name}<br><b>Percentage:</b> ${mat.percentage || 'N/A'}<br><b>Description:</b> ${mat.description}<br><b>Sustainability Score:</b> ${mat.score}</div><hr>`
+            ).join('');
+          } else {
+            analysisResult.innerHTML = 'No materials identified.';
+          }
+        } else {
+          analysisResult.textContent = 'Error: ' + data.error;
+        }
+      })
+      .catch(err => {
+        analysisResult.textContent = 'Upload failed: ' + err.message;
+      })
+      .finally(() => {
+        analyzeBtn.disabled = false;
+      });
+    });
+  </script>
 
   <script src="/app.js"></script>
 </body>

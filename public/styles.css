@@ -8,6 +8,37 @@ body {
     background-color: #f0f0f0;
 }
 
+.mobile-container {
+    width: 100%;
+    max-width: 400px;
+    min-width: 320px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    padding: 24px 16px 32px 16px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+#imagePreview {
+    max-width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    margin-top: 12px;
+    background: #fafafa;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
 h1 {
     color: #333;
 }

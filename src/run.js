@@ -5,11 +5,11 @@ const OCR = require('./image-to-text');
 console.log(chalk.blue.bgWhite.bold('Starting the application... \n'));
 
 //set image as input
-const imagePath = '../sample-labels/test-image2.jpg';
+const imagePath = '../sample-labels/test-image1.jpg';
 console.log("Input Image Path: ", imagePath, "\n");
 async function run(){
     //use OCR module to extract textls
-    const identifiedMaterials = await OCR.fetchTextFromImage(imagePath);
+    const identifiedMaterials = await OCR.paddleOCRFetchFromImage(imagePath);
     console.log("Materials: \n");
 
     for (let mat in identifiedMaterials){
@@ -19,11 +19,10 @@ async function run(){
         console.log("Sustainability Score: ", identifiedMaterials[mat].score)
         console.log("\n");
     }
-    //Use OCR module to clean up the text and get the materials
+    // //Use OCR module to clean up the text and get the materials
 
     console.log(chalk.blue.bgWhite.bold('Ending the application... \n'));
 }
 run();
 
 
-//To mark the end of the console outputs

@@ -18,8 +18,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@gutenye/ocr-node": "^1.4.8",
     "chalk": "^4.1.0",
     "express": "^5.1.0",
+    "multer": "^2.0.2",
     "natural": "^8.1.0",
     "tesseract.js": "^6.0.1",
     "validator": "^13.15.15"

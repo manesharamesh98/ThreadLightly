@@ -44,5 +44,10 @@
         "name": "acrylic", 
         "description": "Acrylic is not a sustainable material because it is derived from petroleum, its production is energy-intensive and can release toxic chemicals, and it is non-biodegradable. It also contributes to microplastic pollution when it sheds fibers during use and washing. However, there are emerging efforts to improve its sustainability through chemical and mechanical recycling, creating bio-based alternatives, and using recycled content in new products. ",
         "score": 1
+    },
+     {
+        "name": "elastane", 
+        "description": "Elasatane is not a sustainable material because it is derived from petroleum, its production is energy-intensive and can release toxic chemicals, and it is non-biodegradable. It also contributes to microplastic pollution when it sheds fibers during use and washing. However, there are emerging efforts to improve its sustainability through chemical and mechanical recycling, creating bio-based alternatives, and using recycled content in new products. ",
+        "score": 1
     }
 ]
