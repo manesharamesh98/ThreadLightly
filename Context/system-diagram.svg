@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 780" font-family="IBM Plex Sans, ui-monospace, monospace" font-size="13">
+
+  <!-- Background -->
+  <rect width="900" height="780" fill="#F8FAFC" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#1C3564">ThreadLightly — System Architecture</text>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- BROWSER LAYER -->
+  <!-- ══════════════════════════════════════════════ -->
+  <rect x="20" y="58" width="860" height="145" rx="10" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5"/>
+  <text x="36" y="78" font-size="11" font-weight="600" fill="#3B82F6" letter-spacing="1">BROWSER  (PWA)</text>
+
+  <!-- Screen boxes -->
+  <rect x="40"  y="88" width="140" height="52" rx="7" fill="#DBEAFE" stroke="#93C5FD" stroke-width="1"/>
+  <text x="110" y="109" text-anchor="middle" font-weight="600" fill="#1D4ED8">Auth Screen</text>
+  <text x="110" y="127" text-anchor="middle" font-size="11" fill="#3B82F6">Google OAuth</text>
+
+  <rect x="200" y="88" width="140" height="52" rx="7" fill="#DBEAFE" stroke="#93C5FD" stroke-width="1"/>
+  <text x="270" y="109" text-anchor="middle" font-weight="600" fill="#1D4ED8">Snap Screen</text>
+  <text x="270" y="127" text-anchor="middle" font-size="11" fill="#3B82F6">Camera / Upload</text>
+
+  <rect x="360" y="88" width="140" height="52" rx="7" fill="#DBEAFE" stroke="#93C5FD" stroke-width="1"/>
+  <text x="430" y="109" text-anchor="middle" font-weight="600" fill="#1D4ED8">Results Screen</text>
+  <text x="430" y="127" text-anchor="middle" font-size="11" fill="#3B82F6">Score + Materials</text>
+
+  <rect x="520" y="88" width="140" height="52" rx="7" fill="#DBEAFE" stroke="#93C5FD" stroke-width="1"/>
+  <text x="590" y="109" text-anchor="middle" font-weight="600" fill="#1D4ED8">Profile Screen</text>
+  <text x="590" y="127" text-anchor="middle" font-size="11" fill="#3B82F6">Scan History</text>
+
+  <!-- Service worker badge -->
+  <rect x="690" y="88" width="165" height="52" rx="7" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1"/>
+  <text x="772" y="109" text-anchor="middle" font-weight="600" fill="#15803D">Service Worker</text>
+  <text x="772" y="127" text-anchor="middle" font-size="11" fill="#16A34A">Offline asset cache</text>
+
+  <!-- app.js note -->
+  <text x="450" y="186" text-anchor="middle" font-size="11" fill="#6B7280">public/js/app.js — state, routing, camera, apiFetch() injects JWT Bearer token</text>
+
+  <!-- Arrow down from browser -->
+  <line x1="265" y1="203" x2="265" y2="228" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="590" y1="203" x2="590" y2="228" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- EXPRESS SERVER LAYER -->
+  <!-- ══════════════════════════════════════════════ -->
+  <rect x="20" y="228" width="860" height="130" rx="10" fill="#F0FDF4" stroke="#6EE7B7" stroke-width="1.5"/>
+  <text x="36" y="248" font-size="11" font-weight="600" fill="#059669" letter-spacing="1">EXPRESS SERVER  (src/server.js)</text>
+
+  <!-- Route boxes -->
+  <rect x="40"  y="258" width="185" height="80" rx="7" fill="#D1FAE5" stroke="#6EE7B7" stroke-width="1"/>
+  <text x="132" y="278" text-anchor="middle" font-weight="600" fill="#065F46">Auth Routes</text>
+  <text x="132" y="295" text-anchor="middle" font-size="11" fill="#047857">GET /api/auth/google</text>
+  <text x="132" y="311" text-anchor="middle" font-size="11" fill="#047857">GET /api/auth/callback</text>
+  <text x="132" y="327" text-anchor="middle" font-size="11" fill="#047857">GET /api/auth/me</text>
+
+  <rect x="247" y="258" width="215" height="80" rx="7" fill="#D1FAE5" stroke="#6EE7B7" stroke-width="1"/>
+  <text x="354" y="278" text-anchor="middle" font-weight="600" fill="#065F46">Analyze Route</text>
+  <text x="354" y="295" text-anchor="middle" font-size="11" fill="#047857">POST /api/analyze</text>
+  <text x="354" y="311" text-anchor="middle" font-size="11" fill="#047857">requireAuth() → Multer (10MB)</text>
+  <text x="354" y="327" text-anchor="middle" font-size="11" fill="#047857">→ pipeline → save scan</text>
+
+  <rect x="484" y="258" width="195" height="80" rx="7" fill="#D1FAE5" stroke="#6EE7B7" stroke-width="1"/>
+  <text x="581" y="278" text-anchor="middle" font-weight="600" fill="#065F46">Scans Routes</text>
+  <text x="581" y="295" text-anchor="middle" font-size="11" fill="#047857">GET /api/scans</text>
+  <text x="581" y="311" text-anchor="middle" font-size="11" fill="#047857">GET /api/scans/:id</text>
+  <text x="581" y="327" text-anchor="middle" font-size="11" fill="#047857">requireAuth() (JWT)</text>
+
+  <!-- JWT middleware note -->
+  <rect x="701" y="258" width="159" height="80" rx="7" fill="#FEF9C3" stroke="#FDE047" stroke-width="1"/>
+  <text x="780" y="278" text-anchor="middle" font-weight="600" fill="#713F12">Auth Middleware</text>
+  <text x="780" y="295" text-anchor="middle" font-size="11" fill="#854D0E">src/middleware/auth.js</text>
+  <text x="780" y="311" text-anchor="middle" font-size="11" fill="#854D0E">JWT verify</text>
+  <text x="780" y="327" text-anchor="middle" font-size="11" fill="#854D0E">dev preview bypass</text>
+
+  <!-- Arrows down from server -->
+  <line x1="132" y1="358" x2="132" y2="383" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="354" y1="358" x2="354" y2="383" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="581" y1="358" x2="762" y2="383" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- BOTTOM ROW: Google OAuth | Pipeline | DB -->
+  <!-- ══════════════════════════════════════════════ -->
+
+  <!-- Google OAuth box -->
+  <rect x="20" y="383" width="220" height="90" rx="10" fill="#FEF3C7" stroke="#FCD34D" stroke-width="1.5"/>
+  <text x="130" y="406" text-anchor="middle" font-size="11" font-weight="600" fill="#92400E" letter-spacing="1">GOOGLE OAUTH 2.0</text>
+  <text x="130" y="427" text-anchor="middle" font-size="12" fill="#78350F">Passport strategy</text>
+  <text x="130" y="445" text-anchor="middle" font-size="12" fill="#78350F">→ callback issues JWT</text>
+  <text x="130" y="463" text-anchor="middle" font-size="12" fill="#78350F">→ redirect /#token=…</text>
+
+  <!-- Pipeline box -->
+  <rect x="258" y="383" width="415" height="365" rx="10" fill="#FAF5FF" stroke="#C4B5FD" stroke-width="1.5"/>
+  <text x="465" y="406" text-anchor="middle" font-size="11" font-weight="600" fill="#7C3AED" letter-spacing="1">ANALYSIS PIPELINE  (src/pipeline/)</text>
+
+  <!-- Stage 1 -->
+  <rect x="278" y="415" width="375" height="48" rx="6" fill="#EDE9FE" stroke="#A78BFA" stroke-width="1"/>
+  <text x="350" y="435" font-weight="600" fill="#5B21B6">1  preprocess.js</text>
+  <text x="350" y="452" font-size="11" fill="#6D28D9">Sharp: EXIF rotate · upscale to 1500px · 3 contrast variants</text>
+
+  <!-- Arrow -->
+  <line x1="465" y1="463" x2="465" y2="473" stroke="#A78BFA" stroke-width="1.5" marker-end="url(#arr-p)"/>
+
+  <!-- Stage 2 -->
+  <rect x="278" y="473" width="375" height="48" rx="6" fill="#EDE9FE" stroke="#A78BFA" stroke-width="1"/>
+  <text x="350" y="493" font-weight="600" fill="#5B21B6">2  ocr.js</text>
+  <text x="350" y="510" font-size="11" fill="#6D28D9">Tesseract.js: PSM modes 6 / 3 / 11 → highest confidence result</text>
+
+  <line x1="465" y1="521" x2="465" y2="531" stroke="#A78BFA" stroke-width="1.5" marker-end="url(#arr-p)"/>
+
+  <!-- Stage 3 -->
+  <rect x="278" y="531" width="375" height="48" rx="6" fill="#EDE9FE" stroke="#A78BFA" stroke-width="1"/>
+  <text x="350" y="551" font-weight="600" fill="#5B21B6">3  matcher.js  — clean</text>
+  <text x="350" y="568" font-size="11" fill="#6D28D9">Strip OCR noise · fix O→0, l→1, rn→m · keep % lines</text>
+
+  <line x1="465" y1="579" x2="465" y2="589" stroke="#A78BFA" stroke-width="1.5" marker-end="url(#arr-p)"/>
+
+  <!-- Stage 4 -->
+  <rect x="278" y="589" width="375" height="48" rx="6" fill="#EDE9FE" stroke="#A78BFA" stroke-width="1"/>
+  <text x="350" y="609" font-weight="600" fill="#5B21B6">4  matcher.js  — match</text>
+  <text x="350" y="626" font-size="11" fill="#6D28D9">Regex extract NN% Name · Levenshtein ≤2 · Soundex phonetic</text>
+
+  <!-- materials-db side note -->
+  <rect x="278" y="645" width="170" height="38" rx="5" fill="#F3E8FF" stroke="#C4B5FD" stroke-width="1"/>
+  <text x="363" y="660" text-anchor="middle" font-size="11" font-weight="600" fill="#6D28D9">materials-db.js</text>
+  <text x="363" y="675" text-anchor="middle" font-size="10" fill="#7C3AED">30+ materials · A–E classes</text>
+
+  <line x1="465" y1="637" x2="465" y2="647" stroke="#A78BFA" stroke-width="1.5" marker-end="url(#arr-p)"/>
+
+  <!-- Stage 5 -->
+  <rect x="460" y="645" width="193" height="38" rx="6" fill="#EDE9FE" stroke="#A78BFA" stroke-width="1"/>
+  <text x="556" y="660" text-anchor="middle" font-weight="600" fill="#5B21B6">5  scorer.js</text>
+  <text x="556" y="675" text-anchor="middle" font-size="11" fill="#6D28D9">Weighted avg → Bad/OK/Good/Great</text>
+
+  <!-- Output box -->
+  <rect x="278" y="695" width="375" height="42" rx="6" fill="#D8B4FE" stroke="#9333EA" stroke-width="1.2"/>
+  <text x="465" y="712" text-anchor="middle" font-weight="600" fill="#581C87">Output</text>
+  <text x="465" y="729" text-anchor="middle" font-size="11" fill="#6B21A8">{ score, rating, garmentType, materials[], confidence, rawText }</text>
+
+  <!-- Database box -->
+  <rect x="691" y="383" width="189" height="210" rx="10" fill="#FFF1F2" stroke="#FDA4AF" stroke-width="1.5"/>
+  <text x="785" y="406" text-anchor="middle" font-size="11" font-weight="600" fill="#9F1239" letter-spacing="1">SQLite DATABASE</text>
+  <text x="785" y="424" text-anchor="middle" font-size="11" fill="#BE123C">better-sqlite3 + WAL</text>
+
+  <!-- users table -->
+  <rect x="711" y="433" width="149" height="70" rx="5" fill="#FFE4E6" stroke="#FDA4AF" stroke-width="1"/>
+  <text x="785" y="450" text-anchor="middle" font-size="11" font-weight="600" fill="#9F1239">users</text>
+  <text x="785" y="466" text-anchor="middle" font-size="10" fill="#BE123C">id, google_id, email</text>
+  <text x="785" y="481" text-anchor="middle" font-size="10" fill="#BE123C">name, avatar</text>
+  <text x="785" y="496" text-anchor="middle" font-size="10" fill="#BE123C">created_at</text>
+
+  <!-- scans table -->
+  <rect x="711" y="515" width="149" height="70" rx="5" fill="#FFE4E6" stroke="#FDA4AF" stroke-width="1"/>
+  <text x="785" y="532" text-anchor="middle" font-size="11" font-weight="600" fill="#9F1239">scans</text>
+  <text x="785" y="548" text-anchor="middle" font-size="10" fill="#BE123C">id, user_id (FK)</text>
+  <text x="785" y="563" text-anchor="middle" font-size="10" fill="#BE123C">score, rating, materials</text>
+  <text x="785" y="578" text-anchor="middle" font-size="10" fill="#BE123C">confidence, raw_text</text>
+
+  <!-- Arrow from pipeline output to DB -->
+  <line x1="653" y1="716" x2="785" y2="716" stroke="#94A3B8" stroke-width="1.5"/>
+  <line x1="785" y1="716" x2="785" y2="593" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#94A3B8"/>
+    </marker>
+    <marker id="arr-p" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#A78BFA"/>
+    </marker>
+  </defs>
+
+</svg>

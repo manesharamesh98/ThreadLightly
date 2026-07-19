@@ -1,145 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ThreadLightly OCR</title>
-
-  <!-- Manifest -->
-  <link rel="manifest" href="/manifest.json">
-  <link rel="stylesheet" href="/styles.css">
-
-  <!-- App icon -->
-  <link rel="icon" href="/nostalgia-192x192.png" />
-
-  <!-- Theme -->
-  <meta name="theme-color" content="#317EFB" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1C3564" />
+  <meta name="description" content="ThreadLightly — Changing behavior, one snap at a time." />
+  <title>ThreadLightly</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/images/nostalgia-192x192.png" />
+  <link rel="stylesheet" href="/css/variables.css" />
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
+  <div id="app">
 
-  <div class="mobile-container">
-  <h2>Upload or Take a Picture</h2>
-  <input type="file" id="imageUpload" accept="image/*" />
-  <button id="takePictureBtn" type="button">Take a Picture</button>
-  <button id="analyzeBtn" type="button" disabled>Get Materials Analysis</button>
-  <br><br>
-  <video id="cameraStream" autoplay playsinline style="display:none; max-width:100%; border-radius:8px;"></video>
-  <canvas id="captureCanvas" style="display:none;"></canvas>
-  <img id="imagePreview" src="" alt="Image Preview" style="display: none;" />
-  <div id="analysisResult" style="margin-top:16px;"></div>
+    <!-- ── AUTH SCREEN ── -->
+    <div id="screen-auth" class="screen active">
+      <div class="auth-content">
+        <img class="auth-logo" src="/images/logo_threadlightly_1.svg" alt="ThreadLightly" />
+        <h1 class="auth-headline">Shop with purpose.</h1>
+        <p class="auth-sub">Snap a clothing label to instantly see its sustainability score. Changing behavior, one snap at a time.</p>
+        <a class="btn--google" href="/api/auth/google" id="google-btn">
+          <!-- Google G logo -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </a>
+        <button id="preview-btn" style="background:none;border:none;color:var(--color-dark-60);font-size:var(--font-caption);cursor:pointer;text-decoration:underline;font-family:var(--font-family)">Skip login — preview only</button>
+      </div>
+    </div>
+
+    <!-- ── HOME SCREEN ── -->
+    <div id="screen-home" class="screen">
+      <header class="header">
+        <button class="header__btn header__btn--invisible" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+        </button>
+        <img class="header__logo" src="/images/logo_threadlightly_1.svg" alt="ThreadLightly" />
+        <button class="header__btn" id="home-profile-btn" aria-label="Profile">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+      </header>
+      <div class="home-content">
+        <div class="home-illustration">
+          <img src="/images/bird_512x512.png" alt="Person analysing clothing" />
+        </div>
+        <h1 class="home-headline">Found something you like?</h1>
+        <button class="btn btn--primary home-cta" id="home-snap-btn">Materials Analysis</button>
+      </div>
+    </div>
+
+    <!-- ── SNAP SCREEN ── -->
+    <div id="screen-snap" class="screen">
+      <header class="header">
+        <button class="header__btn" id="snap-close-btn" aria-label="Close">
+          <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+        <span class="header__title">Snap</span>
+        <button class="header__btn header__btn--invisible" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+        </button>
+      </header>
+      <div class="snap-content">
+        <p class="snap-instruction">Take a picture of the materials label</p>
+        <div class="snap-viewfinder" id="snap-viewfinder">
+          <video id="snap-video" autoplay playsinline></video>
+          <img id="snap-preview" style="display:none" alt="Captured label" />
+          <canvas id="snap-canvas" style="display:none"></canvas>
+          <p class="snap-viewfinder__hint" id="snap-hint">Point camera at label and tap to capture</p>
+        </div>
+        <div class="snap-controls">
+          <button class="snap-icon-btn snap-icon-btn--gallery" id="snap-gallery-btn" aria-label="Upload from gallery">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          </button>
+          <input type="file" id="snap-file-input" accept="image/*" style="display:none" />
+          <button class="snap-btn-capture" id="snap-capture-btn" aria-label="Capture"></button>
+          <button class="snap-icon-btn snap-icon-btn--delete hidden" id="snap-delete-btn" aria-label="Delete photo">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+        </div>
+        <button class="btn btn--primary" id="snap-analyze-btn" disabled>View Materials Analysis</button>
+      </div>
+    </div>
+
+    <!-- ── RESULTS SCREEN ── -->
+    <div id="screen-results" class="screen">
+      <header class="header">
+        <button class="header__btn" id="results-back-btn" aria-label="Back">
+          <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        </button>
+        <span class="header__title">Snap Results</span>
+        <button class="header__btn header__btn--invisible" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+        </button>
+      </header>
+      <div class="results-content" id="results-content">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- ── RESOURCES SCREEN ── -->
+    <div id="screen-resources" class="screen">
+      <header class="header">
+        <button class="header__btn header__btn--invisible" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></button>
+        <span class="header__title">Resources</span>
+        <button class="header__btn header__btn--invisible" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></button>
+      </header>
+      <div class="resources-content">
+        <div class="resource-card">
+          <span class="resource-card__icon">♻️</span>
+          <p class="resource-card__title">How to recycle clothes</p>
+          <p class="resource-card__body">Clothes in good condition can be donated to charity shops or clothing banks. Many high street stores now offer take-back schemes. Worn-out textiles can go to textile recycling bins — never regular landfill.</p>
+        </div>
+        <div class="resource-card">
+          <span class="resource-card__icon">🌱</span>
+          <p class="resource-card__title">Understanding material labels</p>
+          <p class="resource-card__body">Clothing labels list materials by percentage. The higher a material appears on the list, the greater its share. MADE-BY grades fibres from Class A (most sustainable) to Class E (least) based on environmental impact.</p>
+        </div>
+        <div class="resource-card">
+          <span class="resource-card__icon">💧</span>
+          <p class="resource-card__title">Wash smarter</p>
+          <p class="resource-card__body">Washing clothes at 30°C uses up to 40% less energy than 40°C. Use a full load, avoid tumble drying, and wash synthetic fabrics in a microplastic-catching bag to reduce ocean pollution.</p>
+        </div>
+        <div class="resource-card">
+          <span class="resource-card__icon">🛍️</span>
+          <p class="resource-card__title">Buy less, buy better</p>
+          <p class="resource-card__body">The most sustainable garment is one that already exists. Consider secondhand shopping, clothing swaps, and renting for occasions. When buying new, choose quality over quantity.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PROFILE SCREEN ── -->
+    <div id="screen-profile" class="screen">
+      <header class="header">
+        <button class="header__btn header__btn--invisible" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></button>
+        <span class="header__title">Profile</span>
+        <button class="header__btn" id="profile-signout-btn" aria-label="Sign out">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </header>
+      <div class="profile-content">
+        <div class="profile-user">
+          <div class="profile-avatar" id="profile-avatar"></div>
+          <div>
+            <p class="profile-name" id="profile-name">—</p>
+            <p class="profile-email" id="profile-email">—</p>
+          </div>
+        </div>
+        <div>
+          <h2 class="section-title" style="font-size:20px;margin-bottom:12px;">Scan History</h2>
+          <div id="scan-history-list"><p class="empty-state">No scans yet. Start by analysing a label!</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Bottom Nav (hidden until logged in) ── -->
+    <nav class="bottom-nav" id="bottom-nav" style="display:none">
+      <button class="nav-tab active" data-screen="home">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </button>
+      <button class="nav-tab" data-screen="snap">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        Snap
+      </button>
+      <button class="nav-tab" data-screen="resources">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Resources
+      </button>
+      <button class="nav-tab" data-screen="profile">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profile
+      </button>
+    </nav>
+
+  </div><!-- /#app -->
+
+  <!-- Loading overlay -->
+  <div class="loading-overlay hidden" id="loading-overlay">
+    <div class="spinner"></div>
+    <p id="loading-text">Analysing label…</p>
   </div>
 
-  <script>
-    const imageUpload = document.getElementById('imageUpload');
-    const imagePreview = document.getElementById('imagePreview');
-    const takePictureBtn = document.getElementById('takePictureBtn');
-    const analyzeBtn = document.getElementById('analyzeBtn');
-    const cameraStream = document.getElementById('cameraStream');
-    const captureCanvas = document.getElementById('captureCanvas');
-    const analysisResult = document.getElementById('analysisResult');
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
 
-    let lastImageFile = null;
-    let lastImageBlob = null;
-
-    function enableAnalyzeButton() {
-      analyzeBtn.disabled = false;
-    }
-
-    imageUpload.addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        lastImageFile = file;
-        lastImageBlob = null;
-        enableAnalyzeButton();
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          imagePreview.src = e.target.result;
-          imagePreview.style.display = 'block';
-          cameraStream.style.display = 'none';
-        };
-        reader.readAsDataURL(file);
-      } else {
-        imagePreview.src = '';
-        imagePreview.style.display = 'none';
-        analyzeBtn.disabled = true;
-        lastImageFile = null;
-        lastImageBlob = null;
-      }
-    });
-
-    let stream = null;
-    takePictureBtn.addEventListener('click', async function() {
-      if (!stream) {
-        try {
-          stream = await navigator.mediaDevices.getUserMedia({ video: true });
-          cameraStream.srcObject = stream;
-          cameraStream.style.display = 'block';
-          imagePreview.style.display = 'none';
-          takePictureBtn.textContent = 'Capture Photo';
-        } catch (err) {
-          alert('Could not access the camera.');
-        }
-      } else {
-        // Capture the current frame
-        captureCanvas.width = cameraStream.videoWidth;
-        captureCanvas.height = cameraStream.videoHeight;
-        captureCanvas.getContext('2d').drawImage(cameraStream, 0, 0);
-        const dataUrl = captureCanvas.toDataURL('image/png');
-        imagePreview.src = dataUrl;
-        imagePreview.style.display = 'block';
-        cameraStream.style.display = 'none';
-        takePictureBtn.textContent = 'Take a Picture';
-        // Convert dataURL to Blob for upload
-        fetch(dataUrl)
-          .then(res => res.blob())
-          .then(blob => {
-            lastImageBlob = blob;
-            lastImageFile = null;
-            enableAnalyzeButton();
-          });
-        // Stop the camera
-        stream.getTracks().forEach(track => track.stop());
-        stream = null;
-      }
-    });
-
-    analyzeBtn.addEventListener('click', function() {
-      if (!lastImageFile && !lastImageBlob) return;
-      analyzeBtn.disabled = true;
-      analysisResult.textContent = 'Analyzing...';
-      const formData = new FormData();
-      if (lastImageFile) {
-        formData.append('image', lastImageFile);
-      } else if (lastImageBlob) {
-        formData.append('image', lastImageBlob, 'captured.png');
-      }
-      fetch('/process-image', {
-        method: 'POST',
-        body: formData
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          if (data.materials && data.materials.length > 0) {
-            analysisResult.innerHTML = '<b>Materials Analysis:</b><br>' + data.materials.map(mat =>
-              `<div><b>Name:</b> ${mat.name}<br><b>Percentage:</b> ${mat.percentage || 'N/A'}<br><b>Description:</b> ${mat.description}<br><b>Sustainability Score:</b> ${mat.score}</div><hr>`
-            ).join('');
-          } else {
-            analysisResult.innerHTML = 'No materials identified.';
-          }
-        } else {
-          analysisResult.textContent = 'Error: ' + data.error;
-        }
-      })
-      .catch(err => {
-        analysisResult.textContent = 'Upload failed: ' + err.message;
-      })
-      .finally(() => {
-        analyzeBtn.disabled = false;
-      });
-    });
-  </script>
-
-  <script src="/app.js"></script>
+  <script src="/js/app.js" type="module"></script>
 </body>
 </html>

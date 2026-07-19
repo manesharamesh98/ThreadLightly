@@ -1,39 +1,30 @@
-
+require('dotenv').config();
 const express = require('express');
+const passport = require('passport');
 const path = require('path');
-const multer = require('multer');
-const fs = require('fs');
-const app = express();
-const OCR = require('./image-to-text');
 
-const pathToPublicDir = path.join(__dirname, '../public');
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(pathToPublicDir));
+app.use(express.json());
+app.use(passport.initialize());
 
-app.get('/test', (req, res) => res.send('Test route working!'));
+// API routes
+try {
+  app.use('/api/auth', require('./routes/auth'));
+  app.use('/api/analyze', require('./routes/analyze'));
+  app.use('/api/scans', require('./routes/scans'));
+  console.log('✓ Routes loaded');
+} catch (err) {
+  console.error('✗ Failed to load routes:', err.message);
+}
 
-// Set up multer for file uploads
-const upload = multer({ dest: 'uploads/' });
+// Serve static frontend
+app.use(express.static(path.join(__dirname, '../public')));
 
-
-
-// API endpoint to accept image upload and process it
-app.post('/process-image', upload.single('image'), async (req, res) => {
-    try {
-        if (!req.file) {
-            return res.status(400).json({ success: false, error: 'No image uploaded.' });
-        }
-        const imagePath = req.file.path;
-        const identifiedMaterials = await OCR.paddleOCRFetchFromImage(imagePath);
-        // Optionally delete the uploaded file after processing
-        fs.unlink(imagePath, () => {});
-        res.json({ success: true, materials: identifiedMaterials });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
-    }
+// SPA fallback — all non-API routes serve index.html (Express 5 syntax)
+app.get('/{*path}', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-app.listen(PORT, ()=>{console.log('Server started on port 3000')})
-
-
+app.listen(PORT, () => console.log(`ThreadLightly running on http://localhost:${PORT}`));

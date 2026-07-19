@@ -1,2 +1,12 @@
 node_modules/
 easyocr-venv/
+.env
+threadlightly.db
+threadlightly.db-shm
+threadlightly.db-wal
+uploads/*
+!uploads/.gitkeep
+.claude/settings.local.json
+Context/.Rhistory
+*.traineddata
+.DS_Store

@@ -1,20 +1,14 @@
 {
-  "name": "ThreadLightly OCR",
+  "name": "ThreadLightly",
   "short_name": "ThreadLightly",
+  "description": "Changing behavior, one snap at a time.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#317EFB",
+  "background_color": "#FFFFFF",
+  "theme_color": "#1C3564",
+  "orientation": "portrait",
   "icons": [
-    {
-      "src": "/nostalgia-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/bird_512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "/images/nostalgia-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/images/bird_512x512.png",      "sizes": "512x512", "type": "image/png" }
   ]
 }
